@@ -1,11 +1,11 @@
-import { connect } from "@dbConfig/dbConfig";
+import { connect } from "../../../../dbConfig/dbCongfig";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
-import User from "@models/userModel";
+import User from "../../../../models/userModel";
 
 connect();
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
     const { username, email, password } = reqBody;
@@ -29,10 +29,10 @@ export async function POST() {
     const newUser = new User({
       username,
       email,
-      hashpassword,
+      password: hashpassword,
     });
 
-    const savedUser = newUser.save();
+    const savedUser = await newUser.save();
     console.log(savedUser);
 
     return NextResponse.json({
@@ -40,9 +40,7 @@ export async function POST() {
       success: true,
       savedUser,
     });
-
-    
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
