@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const SignupPage = () => {
   const [user, setUser] = useState({
@@ -21,6 +22,7 @@ const SignupPage = () => {
       const response = await axios.post("/api/users/signup", user);
       console.log(response.data);
       router.push("/login");
+      toast.success("Signup Success");
     } catch (error: any) {
       console.log(error.message);
     } finally {

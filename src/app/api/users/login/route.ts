@@ -14,7 +14,7 @@ export async function POST(response: NextResponse) {
 
     console.log(reqBody);
 
-    // if User does not  exists
+    // if User does not exists
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -24,7 +24,7 @@ export async function POST(response: NextResponse) {
       );
     }
 
-    // if password does not exits
+    // if password does not exists
 
     const isMatch = await bcryptjs.compare(password, user.password);
     if (!isMatch) {

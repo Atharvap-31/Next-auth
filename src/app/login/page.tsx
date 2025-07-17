@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 
 const LoginPage = () => {
   const [user, setUser] = useState({
@@ -16,11 +17,14 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       setIsLoading(true);
+
       const response = await axios.post("/api/users/login", user);
       console.log(response);
       router.push("/profile");
+      toast.success("Login Successfull");
     } catch (error: any) {
       console.log(error);
+      toast.error("Login Failed");
     } finally {
       setIsLoading(false);
     }
